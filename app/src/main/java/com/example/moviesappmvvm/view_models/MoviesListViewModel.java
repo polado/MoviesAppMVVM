@@ -16,6 +16,7 @@ import java.util.List;
 public class MoviesListViewModel extends ViewModel {
     private MutableLiveData<List<Movie>> popularMoviesMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<List<Movie>> nowPlayingMoviesMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<Movie>> favouriteMoviesMutableLiveData = new MutableLiveData<>();
     private MoviesListModel moviesListModel = new MoviesListModel();
 
     public MutableLiveData<Integer> isLoadingLiveData = new MutableLiveData<>();
@@ -26,6 +27,14 @@ public class MoviesListViewModel extends ViewModel {
     public void MoviesListViewModel() {
         moviesListModel = new MoviesListModel();
         popularMoviesMutableLiveData = new MutableLiveData<>();
+    }
+
+    public MutableLiveData<List<Movie>> getFavouriteMoviesData() {
+
+        SetFavouritesTask t = new SetFavouritesTask();
+        t.execute();
+
+        return isFavouriteLiveData;
     }
 
     public MutableLiveData<List<Movie>> getPopularMoviesData() {
@@ -146,11 +155,11 @@ public class MoviesListViewModel extends ViewModel {
 
     public void toggleFavourite(final Movie movie, final boolean isFavourite) {
         movie.isFavourite = isFavourite;
-        Task t = new Task();
+        ToggleFavouriteTask t = new ToggleFavouriteTask();
         t.execute(movie);
     }
 
-    private class Task extends AsyncTask<Movie, Void, List<Movie>> {
+    private class ToggleFavouriteTask extends AsyncTask<Movie, Void, List<Movie>> {
 
         @Override
         protected List<Movie> doInBackground(Movie... movies) {
@@ -167,6 +176,29 @@ public class MoviesListViewModel extends ViewModel {
 
         @Override
         protected void onPostExecute(List<Movie> movies) {
+            isFavouriteLiveData.setValue(movies);
+            super.onPostExecute(movies);
+        }
+    }
+
+    private class SetFavouritesTask extends AsyncTask<Void, Void, List<Movie>> {
+        @Override
+        protected void onPreExecute() {
+            isLoadingLiveData.setValue(View.VISIBLE);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected List<Movie> doInBackground(Void... voids) {
+            List<Movie> list = movieDao
+                    .getAll();
+            Log.e("MovieListPresenter", "toggle Movies in db " + list.size());
+            return list;
+        }
+
+        @Override
+        protected void onPostExecute(List<Movie> movies) {
+            isLoadingLiveData.setValue(View.INVISIBLE);
             isFavouriteLiveData.setValue(movies);
             super.onPostExecute(movies);
         }
