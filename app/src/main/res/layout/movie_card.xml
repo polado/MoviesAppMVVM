@@ -55,7 +55,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_movie_title"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/card_content_padding"
                 android:paddingRight="@dimen/card_content_padding"
@@ -71,15 +70,15 @@
                     android:textSize="@dimen/movie_content_size" />
 
 
-                <TextView
-                    android:id="@+id/tv_movie_ratings"
+                <ImageButton
+                    android:id="@+id/ib_favourite"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_weight="0.3"
-                    android:drawablePadding="5dp"
-                    android:gravity="center"
-                    android:textSize="@dimen/movie_content_size" />
+                    android:background="#00000000"
+                    android:contentDescription="like"
+                    android:src="@drawable/ic_favorite_border" />
 
             </LinearLayout>
         </LinearLayout>

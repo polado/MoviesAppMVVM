@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviesappmvvm.MovieDetailsActivity;
-import com.example.moviesappmvvm.adapters.MoviesAdapter;
 import com.example.moviesappmvvm.R;
+import com.example.moviesappmvvm.adapters.MoviesAdapter;
 import com.example.moviesappmvvm.models.Movie;
 import com.example.moviesappmvvm.view_models.MoviesListViewModel;
 
@@ -75,7 +75,7 @@ public class NowPlayingMoviesFragment extends ParentFragment {
         pbLoading = view.findViewById(R.id.pb_loading);
 
         moviesList = new ArrayList<>();
-        moviesAdapter = new MoviesAdapter(this, moviesList);
+        moviesAdapter = new MoviesAdapter(this, moviesList, moviesListViewModel, this);
 
         mLayoutManager = new GridLayoutManager(getContext(), 2);
         rvMovieList.setLayoutManager(mLayoutManager);

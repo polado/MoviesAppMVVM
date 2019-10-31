@@ -1,31 +1,34 @@
 package com.example.moviesappmvvm.models;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Movie {
+import java.io.Serializable;
 
-    private int id;
+@Entity
+public class Movie implements Serializable {
+    @Ignore
+    public boolean isFavourite;
 
     private String title;
-
+    @PrimaryKey
+    private int id;
+    @ColumnInfo(name = "release_date")
     @SerializedName("release_date")
     private String releaseDate;
-
+    @ColumnInfo(name = "vote_average")
     @SerializedName("vote_average")
     private float rating;
 
-    @SerializedName("poster_path")
-    private String thumbPath;
-
     @SerializedName("overview")
     private String overview;
-
-    @SerializedName("backdrop_path")
-    private String backdropPath;
-
-//    @SerializedName("credits")
-//    private Credits credits;
+    @ColumnInfo(name = "poster_path")
+    @SerializedName("poster_path")
+    private String thumbPath;
 
     @SerializedName("runtime")
     private String runTime;
@@ -35,9 +38,11 @@ public class Movie {
 
     @SerializedName("homepage")
     private String homepage;
+    @ColumnInfo(name = "backdrop_path")
+    @SerializedName("backdrop_path")
+    private String backdropPath;
 
     public Movie(int id, String title, String releaseDate, float rating, String thumbPath, String overview, String backdropPath,
-//                 Credits credits,
                  String runTime, String tagline, String homepage) {
         this.id = id;
         this.title = title;
@@ -46,7 +51,6 @@ public class Movie {
         this.thumbPath = thumbPath;
         this.overview = overview;
         this.backdropPath = backdropPath;
-//        this.credits = credits;
         this.runTime = runTime;
         this.tagline = tagline;
         this.homepage = homepage;
@@ -108,14 +112,6 @@ public class Movie {
         this.backdropPath = backdropPath;
     }
 
-//    public Credits getCredits() {
-//        return credits;
-//    }
-//
-//    public void setCredits(Credits credits) {
-//        this.credits = credits;
-//    }
-
     public String getRunTime() {
         return runTime;
     }
@@ -150,7 +146,6 @@ public class Movie {
                 ", thumbPath='" + thumbPath + '\'' +
                 ", overview='" + overview + '\'' +
                 ", backdropPath='" + backdropPath + '\'' +
-//                ", credits=" + credits +
                 ", runTime='" + runTime + '\'' +
                 ", tagline='" + tagline + '\'' +
                 ", homepage='" + homepage + '\'' +
